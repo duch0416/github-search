@@ -1,7 +1,6 @@
 import React from "react";
 import { QueryCache, ReactQueryCacheProvider } from "react-query";
 
-import "./App.css";
 
 const queryCache = new QueryCache();
 
