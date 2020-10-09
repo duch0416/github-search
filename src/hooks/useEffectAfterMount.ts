@@ -4,10 +4,13 @@ export const useEffectAfterMount = (effect: any, deps: Array<any>) => {
   const isFirstRun = useRef(true);
 
   useEffect(() => {
-    if (isFirstRun) {
+    if (isFirstRun.current) {
       isFirstRun.current = false;
       return;
     }
-    effect && effect();
+    
+    if(effect){
+      return effect();
+    }
   }, deps);
 };

@@ -1,7 +1,6 @@
-import React from "react";
-import { useQuery } from "react-query";
-import { getRepositoris } from "../connectors/repositories/connector";
-import { useDelay } from "../hooks/useDelay";
+import React, { useState } from "react";
+import { useDebounceSearch } from "../hooks/useDebounceSearch";
+
 import { Styles } from "../styles";
 import RepositoriesList from "./RepositoriesList";
 import RepositoriesSearch from "./RepositoriesSearch";
@@ -9,13 +8,10 @@ import RepositoriesSearch from "./RepositoriesSearch";
 export interface RepositoriesProps {}
 
 const Repositories: React.FC<RepositoriesProps> = () => {
-  const { data } = useQuery(["repositories", { q: "tetris" }], getRepositoris, {
-    enabled: true,
-  });
-
-  console.log(data);
+  const [searchValue, setSearchValue] = useState("")
+  const debouncedValue = useDebounceSearch(searchValue)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setSearchValue(e.target.value)
   };
 
   const columns = React.useMemo(
@@ -40,7 +36,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
     []
   );
 
-  console.log(data?.data.items);
+
 
   return (
     <>
@@ -48,7 +44,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
       <Styles>
         <RepositoriesList
           columns={columns}
-          data={data ? data.data.items : []}
+          data={[]}
         />
       </Styles>
     </>
