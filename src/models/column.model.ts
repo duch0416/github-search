@@ -1,3 +1,4 @@
 export interface IColumn {
-    header: string,
+    Header: string,
+    Accessor?: string
 }
