@@ -12,9 +12,9 @@ export const useParams = () => {
   };
 
   const getParams = () => ({
-    q: searchParams.get("q") || "",
-    column: searchParams.get("column") || "",
-    descending: searchParams.get("descending") || "",
+    q: searchParams.get(Params.QUERY) || "",
+    column: searchParams.get(Params.COLUMN) || "",
+    descending: searchParams.get(Params.DESCENDING) || "",
   });
 
   return {

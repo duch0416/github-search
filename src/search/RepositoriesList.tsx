@@ -1,26 +1,27 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { useTable, usePagination, useSortBy } from "react-table";
-import { useEffectAfterMount } from "../hooks/useEffectAfterMount";
-import { useParams } from "../hooks/useParams";
 
+import { setSortBy } from "../context/repositoriesActions";
+import { useEffectAfterMount } from "../hooks/useEffectAfterMount";
 import { IColumn } from "../models/column.model";
-import { Params } from "../models/params.enum";
 import { IRepository } from "../models/repository.model";
-import { ButtonWrapper } from "../styles/button.styles";
+import { InterfaceWrapper } from "../styles/interface.styles";
 
 export interface RepositoriesListProps {
   columns: Array<IColumn>;
   data: Array<IRepository>;
+  column: string;
+  descending: boolean;
+  dispatch: React.Dispatch<any>;
 }
 
 const RepositoriesList: React.FC<RepositoriesListProps> = ({
   columns,
   data,
+  column,
+  descending,
+  dispatch,
 }) => {
-  const history = useHistory()
-  const { setParams, getParams } = useParams();
-  const p = getParams()
   const {
     headerGroups,
     getTableProps,
@@ -39,27 +40,28 @@ const RepositoriesList: React.FC<RepositoriesListProps> = ({
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 10 ,sortBy: [
-        {
-            id: p.column,
-            desc: p.descending === 'true' ? true : false 
-        }
-    ]},
+      initialState: {
+        pageIndex: 0,
+        pageSize: 10,
+        sortBy: [
+          {
+            id: column,
+            desc: descending,
+          },
+        ],
+      },
     },
     useSortBy,
     usePagination
   );
 
   useEffectAfterMount(() => {
-    setParams({ name: "column", value: sortBy[0]?.id});
-    const url = setParams({ name: 'descending', value: sortBy[0]?.desc});
-    history.push(`?${url}`)
+    dispatch(setSortBy({ column: sortBy[0]?.id, descending: sortBy[0]?.desc }));
   }, [JSON.stringify(sortBy)]);
 
-  
   return (
     <>
-      <ButtonWrapper>
+      <InterfaceWrapper>
         <button onClick={previousPage} disabled={!canPreviousPage}>
           previous page
         </button>
@@ -88,7 +90,7 @@ const RepositoriesList: React.FC<RepositoriesListProps> = ({
             </select>
           </>
         ) : null}
-      </ButtonWrapper>
+      </InterfaceWrapper>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
