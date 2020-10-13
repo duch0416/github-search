@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { useTable, usePagination, useSortBy } from "react-table";
 import { useEffectAfterMount } from "../hooks/useEffectAfterMount";
 import { useParams } from "../hooks/useParams";
@@ -17,7 +18,9 @@ const RepositoriesList: React.FC<RepositoriesListProps> = ({
   columns,
   data,
 }) => {
+  const history = useHistory()
   const { setParams, getParams } = useParams();
+  const p = getParams()
   const {
     headerGroups,
     getTableProps,
@@ -36,16 +39,22 @@ const RepositoriesList: React.FC<RepositoriesListProps> = ({
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 10 },
+      initialState: { pageIndex: 0, pageSize: 10 ,sortBy: [
+        {
+            id: p.column,
+            desc: p.descending === 'true' ? true : false 
+        }
+    ]},
     },
     useSortBy,
     usePagination
   );
 
   useEffectAfterMount(() => {
-    setParams({ name: Params.COLUMN, value: sortBy[0]?.id});
-    setParams({ name: Params.DESCENDING, value: sortBy[0]?.desc});
-  }, [sortBy[0]]);
+    setParams({ name: "column", value: sortBy[0]?.id});
+    const url = setParams({ name: 'descending', value: sortBy[0]?.desc});
+    history.push(`?${url}`)
+  }, [JSON.stringify(sortBy)]);
 
   
   return (

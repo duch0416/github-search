@@ -1,10 +1,12 @@
-import { Params } from "../models/params.enum";
+import { useHistory } from "react-router-dom";
 import { useEffectAfterMount } from "./useEffectAfterMount";
 
-
 export const useRepositoriesEffects = (debouncedValue: string, setParams: any) => {
+    const history = useHistory()
+
     useEffectAfterMount(() => {
-        setParams({ name: Params.QUERY, value: debouncedValue });
+        const url = setParams({ name: "q", value: debouncedValue });
+        history.push(`?${url}`)
       }, [debouncedValue]);
 
       
