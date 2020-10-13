@@ -1,3 +1,4 @@
+import { Params } from './../models/params.enum';
 import { IParam } from "./../models/param.model";
 import { useLocation } from "react-router-dom";
 
@@ -8,9 +9,12 @@ export const useParams = () => {
   const setParams = ({name, value}: IParam) => {
     searchParams.set(name, value);
   };
+  
 
   const getParams = () => ({
-      q: searchParams.get('q') || ''
+      q: searchParams.get(Params.QUERY) || '',
+      column: searchParams.get(Params.COLUMN) || '',
+      descending: searchParams.get(Params.DESCENDING) || ''
   })
   
   return {

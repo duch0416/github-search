@@ -1,4 +1,4 @@
 export interface IParam {
     name: string,
-    value: string
+    value: any
 }

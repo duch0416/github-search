@@ -1,3 +1,5 @@
 export enum Params {
-    QUERY = "q"
+    QUERY = "q",
+    COLUMN = "column",
+    DESCENDING = 'descending'
 }

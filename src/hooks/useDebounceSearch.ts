@@ -7,7 +7,6 @@ export const useDebounceSearch = (value: string, delay: number = 500) => {
 
   useEffectAfterMount(() => {
     const timer = setTimeout(() => {
-      console.log("ok")
       setDebouncedValue(value);
     }, delay);
 
