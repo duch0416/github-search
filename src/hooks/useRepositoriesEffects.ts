@@ -13,7 +13,6 @@ export const useRepositoriesEffects = (
   useEffectAfterMount(() => {
     const url = setParams({ name: Params.QUERY, value: debouncedValue });
     history.push(`?${url}`);
-    console.log("ok");
   }, [debouncedValue]);
 
   useEffectAfterMount(() => {

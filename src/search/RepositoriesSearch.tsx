@@ -8,6 +8,6 @@ export interface RepositoriesSearchProps {
 const RepositoriesSearch: React.FC<RepositoriesSearchProps> = ({
   onChange,
   value
-}) => <input type="text" onChange={onChange} value={value} />;
+}) => <input type="text" placeholder={"search"} onChange={onChange} value={value} />;
 
 export default RepositoriesSearch;
