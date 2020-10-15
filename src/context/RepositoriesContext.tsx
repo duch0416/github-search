@@ -25,7 +25,7 @@ export const RepositoriesContext = createContext<{
     dispatch: Dispatch<any>;
 }>({state: initialState, dispatch: () => null })
 
-export const RepositoriesProvider: React.FC = ({children}): any => {
+export const RepositoriesProvider: React.FC = ({children}) => {
     const [state, dispatch] = useReducer(repositoriesReducer, initialState);
 
     return(
