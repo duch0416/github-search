@@ -1,6 +1,6 @@
 
 
-# Github search ![GitHub Logo](/github-logo.png) ![search icon](/search.png)
+# Github search
 
 ### `Installation`
 To install project dependencies type
